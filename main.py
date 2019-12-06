@@ -1,10 +1,14 @@
-from vk_api.longpoll     import VkLongPoll, VkEventType
-from configs.keys        import vk_key
 import configs.keyboards as keyboards
 
 import vk_api
 import random
 import json
+import time
+
+from vk_api.longpoll     import VkLongPoll, VkEventType
+from configs.keys        import vk_key
+
+from src.utils.logger    import Logger
 
 vk = vk_api.VkApi(token=vk_key)
 lp = VkLongPoll(vk)
@@ -40,9 +44,13 @@ def know_rules(user_id):
 ids = ['138966574' , '263838377']
 chat_prefix = 'https://vk.com/gim188933965?sel{0}'
 def main():
-    print('I`am started')
+    logger       = Logger('logs.log')
+    started_time = time.strftime('%d:%m:%Y  %H:%M:%S')
+    logger.log('Started time: {0}'.format(started_time))
+    print('| I`am started at {0} |'.format(started_time))
     while True:
         msg = check()
+        logger.log('Message {0} received from user {1}'.format(msg['message'] , msg['id']))
         if msg['message'] not in keyboards.keylist:            
             back_to_menu(msg['id'])
         else:
@@ -54,6 +62,7 @@ def main():
                 back_to_menu(msg['id'] , message='https://discordapp.com/invite/VaGq52d')
             elif msg['message'] == 'Вызвать Администратора':
                 vk.method('messages.send' , {'user_id': ids[1] , 'random_id': random.randint(0 , 2147483647) , 'message': 'Пользователь {0} вызвал администратора.Вот ссылка на чат:{1}'.format(user_with_url(msg['id']) , chat_prefix.format(msg['id']))})
+                logger.log('User {0} call the admin'.format(msg['id']))
                 back_to_menu(msg['id'] , message='{0}, спасибо.Ожидайте.'.format(get_info(msg['id'] , name=True)))
             elif msg['message'] == 'Правила':
                 vk.method('messages.send' , {'user_id': msg['id'] , 'random_id': random.randint(0 , 2147483647) , 'keyboard': json.dumps(keyboards.yes_or_no) , 'message': 'Вот типа наши правила.Вы ознакомились с ними?'})
