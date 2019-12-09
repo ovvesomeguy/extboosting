@@ -1,3 +1,5 @@
 TZ.txt
 __pycache__
 logs*
+*.db
+

@@ -1,4 +1,4 @@
-keylist = ['Купить', 'Вызвать Администратора' , 'Помочь денюшкой' , 'Дискорд' , 'Правила' , 'Да' , 'Нет']
+keylist = ['Купить', 'Вызвать Администратора' , 'Помочь денюшкой' , 'Дискорд' , 'Правила' , 'Да' , 'Нет' , 'Настройки' , 'Настроить Discord' , 'Настроить Steam' , 'Посмотреть настройки']
 
 
 main_keyboard = {
@@ -10,11 +10,12 @@ main_keyboard = {
             {'color': 'primary' , 'action': {'type': 'text' , 'label': 'Помочь денюшкой'}},
         ],
         [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Дискорд'}}],
-        [{'color': 'secondary' , 'action': {'type': 'text' , 'label': 'Правила'}}]
+        [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Правила'}}],
+        [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Настройки'}}]
     ]
 }
 
-products = {
+products = {    
     'one_time': False,
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #1'}}],
@@ -35,5 +36,17 @@ yes_or_no = {
     'buttons': [
         [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Да'}}],
         [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Нет'}}],
+    ]
+}
+
+
+settings = {
+    'one_time': False,
+    'buttons': [
+        [
+            {'color': 'positive' , 'action': {'type': 'text' , 'label': 'Настроить Discord'}},
+            {'color': 'positive' , 'action': {'type': 'text' , 'label': 'Настроить Steam'}}
+        ],
+        [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Посмотреть настройки'}}]
     ]
 }

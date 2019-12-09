@@ -1,8 +1,11 @@
-from configs.keys    import vk_key
 from vk_api.longpoll import VkLongPoll, VkEventType
 
-import vk_api
-
-def group():
-    vk = vk_api.VkApi(vk_key)
-    return vk
+def check(vk):
+    answer = {}
+    longpoll = VkLongPoll(vk)
+    for event in longpoll.listen():
+        if event.type == VkEventType.MESSAGE_NEW:
+            if event.from_user:
+                answer['id'] = event.user_id
+                answer['message'] = event.text
+                return answer
