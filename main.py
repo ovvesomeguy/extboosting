@@ -7,12 +7,12 @@ import json
 import time
 import os
 
-from configs.keys        import vk_key , admin_ids
+from configs.keys         import vk_key , admin_ids
+from configs.rules        import rules
 
-from src.utils.logger    import Logger
-from src.vk.longpolling  import check
+from src.utils.logger     import Logger
+from src.vk.longpolling   import check
 from src.database.control import Manager
-
 
 class VK:
     def __init__(self):
@@ -72,9 +72,10 @@ def main():
                 m.add_user(username=v.get_info(msg['id']) , user_id=msg['id'] , rules=0 , join_date=datetime.datetime.now() , promocode=0)
             else:
                 if last_user_message == 'Настроить Discord':
-                    m.change_discord(msg['id'] , msg['message'])
+                    m.change_value('discord' , msg['message'] , msg['id'])
                 elif last_user_message == 'Настроить Steam':
-                    m.change_steam(msg['id'] , msg['message'])
+                    m.change_value('steam' , msg['message'] , msg['id'])
+        
         logger.log('Message {0} received from user {1}'.format(msg['message'] , msg['id']))
         if msg['message'] not in keyboards.keylist:            
             v.back_to_menu(msg['id'])
@@ -90,9 +91,16 @@ def main():
                 logger.log('User {0} call the admin'.format(msg['id']))
                 v.back_to_menu(msg['id'] , message='{0}, спасибо.Ожидайте.'.format(v.get_info(msg['id'] , name=True)))
             elif msg['message'] == 'Правила':
-                v.send_message(user_id = msg['id'] , keyboard = json.dumps(keyboards.yes_or_no) , message = 'Вот типа наши правила.Вы ознакомились с ними?')
-            elif msg['message'] == 'Да':
-                v.back_to_menu(msg['id'] , message='Вы согласились с правилами нашего сообщества.')
+                v.send_message(user_id = msg['id'] , keyboard = json.dumps(keyboards.yes_or_no) , message = rules)
+            elif msg['message'] == 'Да': #TODO
+                print(m.get_rules_status(msg['id']))
+                if m.get_rules_status(msg['id']) == 0:
+                    v.back_to_menu(msg['id'] , message='Вы согласились с правилами нашего сообщества.')
+                    m.change_value('rules' , 1 , msg['id'])
+                else:
+                    v.back_to_menu(msg['id'] , message='Вы уже согласились с правилами нашего сообщества.')                    
+            elif msg['message'] == 'Нет':
+                v.back_to_menu(msg['id'] , message='Извините, но покупка товара будет ограничена до тех пор, пока вы не согласитесь с правилами сообщества.')
             elif msg['message'] == 'Настройки':
                 v.send_message(user_id=msg['id'] , keyboard=json.dumps(keyboards.settings) , message='Настройки')
             elif msg['message'] == 'Настроить Discord':

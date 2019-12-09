@@ -41,19 +41,13 @@ class Manager:
         d = self.connect()
         d[0].execute("INSERT INTO users VALUES(?,?,?,?,?,?,?)" , tupl)
         d[1].commit()
-
     
-    def change_discord(self , user_id , value):
+    def change_value(self , value_name , value , user_id):
         d = self.connect()
-        command = 'UPDATE users SET discord = "{0}" WHERE user_id = {1}'.format(value , user_id)
+        command = 'UPDATE users SET {0} = "{1}" WHERE user_id = {2}'.format(value_name , value , user_id)
         d[0].execute(command)
         d[1].commit()
-   
-    def change_steam(self , user_id , value):
-        d = self.connect()
-        command = 'UPDATE users SET steam = "{0}" WHERE user_id = {1}'.format(value , user_id)
-        d[0].execute(command)
-        d[1].commit()
+
     def exists(self , user_id):
         d = self.connect()
         command = 'SELECT username FROM users WHERE user_id = {0}'.format(user_id)
@@ -68,5 +62,10 @@ class Manager:
         d[0].execute(command)
         return d[0].fetchall()
 
+    def get_rules_status(self , user_id):
+        d = self.connect()
+        command = 'SELECT rules FROM users WHERE user_id={0}'.format(user_id)
+        d[0].execute(command)
+        return d[0].fetchall()[0][0]
 # d = Manager('/home/hasan/extbot/users.db')
 # print(d.get_urls(263838377))
