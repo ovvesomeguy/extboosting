@@ -5,7 +5,7 @@ import vk_api
 import random
 import json
 import time
-
+import os
 
 from configs.keys        import vk_key , admin_ids
 
@@ -59,7 +59,7 @@ class VK:
 chat_prefix = 'https://vk.com/gim188933965?sel{0}'
 def main():
     v = VK()
-    m = Manager('/home/hasan/extbot/users.db')
+    m = Manager(os.getcwd() + '/users.db')
     logger       = Logger('logs.log')
     started_time = time.strftime('%d:%m:%Y  %H:%M:%S')
     logger.log('Started time: {0}'.format(started_time))
