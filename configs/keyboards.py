@@ -50,3 +50,10 @@ settings = {
         [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Посмотреть настройки'}}]
     ]
 }
+
+give_me_money = {
+    'one_time': False,
+    'buttons': [
+        [{'action': {'type': 'vkpay' , 'hash': 'action=pay-to-group&amount=1&group_id=188933965&aid=10.'}}]
+    ]
+}

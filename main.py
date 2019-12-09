@@ -102,6 +102,8 @@ def main():
             elif msg['message'] == 'Посмотреть настройки':
                 ids = m.get_urls(msg['id'])
                 v.send_message(user_id=msg['id'] , message='Привязанный аккаунт стим: {0}. Привязанные дискорд аккаунт: {1}'.format(ids[0][0] , ids[0][1]) , keyboard=json.dumps(keyboards.main_keyboard))
+            elif msg['message'] == 'Помочь денюшкой':
+                v.send_message(user_id=msg['id'] , message='.' , keyboard=json.dumps(keyboards.give_me_money))
 if __name__ == "__main__":
     main()
     # v = VK()
