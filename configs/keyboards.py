@@ -15,22 +15,37 @@ main_keyboard = {
     ]
 }
 
-products = {    
+products_yes = {    
     'one_time': False,
     'buttons': [
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #1'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #2'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #3'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #4'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #5'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #6'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #7'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #8'}}],
-        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #9'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Буст 5x5'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Буст 2x2'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Прайм аккаунт'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Нонпрайм аккаунт'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Буст часов'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Буст лайков'}}],
+        [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Буст коментариев'}}],
+        # [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #8'}}],
+        # [{'color': 'positive' , 'action': {'type': 'text' , 'label': 'Пример товара #9'}}],
         [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Вернуться'}}]
     ]
 }
 
+products_no ={    
+    'one_time': False,
+    'buttons': [
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Буст 5x5'}}],
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Буст 2x2'}}],
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Прайм аккаунт'}}],
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Нонпрайм аккаунт'}}],
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Буст часов'}}],
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Буст лайков'}}],
+        [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Буст коментариев'}}],
+        # [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Пример товара #8'}}],
+        # [{'color': 'negative' , 'action': {'type': 'text' , 'label': 'Пример товара #9'}}],
+        [{'color': 'primary' , 'action': {'type': 'text' , 'label': 'Вернуться'}}]
+    ]
+}
 yes_or_no = {
     'one_time': True,
     'buttons': [
@@ -56,4 +71,9 @@ give_me_money = {
     'buttons': [
         [{'action': {'type': 'vkpay' , 'hash': 'action=pay-to-group&amount=1&group_id=188933965&aid=10.'}}]
     ]
+}
+
+clear_keyboard = {
+    'one_time': True,
+    'buttons': []
 }

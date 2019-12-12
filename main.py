@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import configs.keyboards as keyboards
 
 import datetime
@@ -72,7 +73,10 @@ def main():
                 m.add_user(username=v.get_info(msg['id']) , user_id=msg['id'] , rules=0 , join_date=datetime.datetime.now() , promocode=0)
             else:
                 if last_user_message == 'Настроить Discord':
-                    m.change_value('discord' , msg['message'] , msg['id'])
+                    if not '#' in msg['message'] or len(msg['message'].split('#')[1]) != 4:
+                        v.back_to_menu(user_id=msg['id'] , message='Извините но это не похоже на дискорд тэг')
+                    else:
+                        m.change_value('discord' , msg['message'] , msg['id'])
                 elif last_user_message == 'Настроить Steam':
                     m.change_value('steam' , msg['message'] , msg['id'])
         
@@ -81,7 +85,10 @@ def main():
             v.back_to_menu(msg['id'])
         else:
             if msg['message'] == 'Купить':
-                v.send_message(user_id = msg['id'] , keyboard = json.dumps(keyboards.products), message = 'Вот товары')
+                if m.get_rules_status(msg['id']) == 0:
+                    v.send_message(user_id = msg['id'] , keyboard = json.dumps(keyboards.products_no), message = 'Вам недоступна покупка товаров, пожалуйста ознакомтесь с правилами сообщества в разделе "Правила".')
+                else:
+                    v.send_message(user_id = msg['id'] , keyboard = json.dumps(keyboards.products_yes), message = 'Вот товары')
             elif msg['message'] == 'Вернуться':
                 v.back_to_menu(msg['id'])
             elif msg['message'] == 'Дискорд':
@@ -93,9 +100,8 @@ def main():
             elif msg['message'] == 'Правила':
                 v.send_message(user_id = msg['id'] , keyboard = json.dumps(keyboards.yes_or_no) , message = rules)
             elif msg['message'] == 'Да': #TODO
-                print(m.get_rules_status(msg['id']))
                 if m.get_rules_status(msg['id']) == 0:
-                    v.back_to_menu(msg['id'] , message='Вы согласились с правилами нашего сообщества.')
+                    v.back_to_menu(msg['id'] , message='Вы согласились с правилами нашего сообщества.Теперь вам доступны покупки в разделе "Купить товар".')
                     m.change_value('rules' , 1 , msg['id'])
                 else:
                     v.back_to_menu(msg['id'] , message='Вы уже согласились с правилами нашего сообщества.')                    
@@ -104,12 +110,12 @@ def main():
             elif msg['message'] == 'Настройки':
                 v.send_message(user_id=msg['id'] , keyboard=json.dumps(keyboards.settings) , message='Настройки')
             elif msg['message'] == 'Настроить Discord':
-                v.send_message(user_id=msg['id'] , message='Пожалуйста введите свой тэг')
+                v.send_message(user_id=msg['id'] , message='Пожалуйста введите свой тэг' , keyboard=json.dumps(keyboards.clear_keyboard))
             elif msg['message'] == 'Настроить Steam':
-                v.send_message(user_id=msg['id'] , message='Пожалуйста введите ссылку на свой аккаунт')
+                v.send_message(user_id=msg['id'] , message='Пожалуйста введите ссылку на свой аккаунт' , keyboard=json.dumps(keyboards.clear_keyboard))
             elif msg['message'] == 'Посмотреть настройки':
                 ids = m.get_urls(msg['id'])
-                v.send_message(user_id=msg['id'] , message='Привязанный аккаунт стим: {0}. Привязанные дискорд аккаунт: {1}'.format(ids[0][0] , ids[0][1]) , keyboard=json.dumps(keyboards.main_keyboard))
+                v.send_message(user_id=msg['id'] , message='Привязанный аккаунт стим: {0}. Привязанные дискорд аккаунт: {1}'.format(ids[0][1] , ids[0][0]) , keyboard=json.dumps(keyboards.main_keyboard))
             elif msg['message'] == 'Помочь денюшкой':
                 v.send_message(user_id=msg['id'] , message='.' , keyboard=json.dumps(keyboards.give_me_money))
 if __name__ == "__main__":
