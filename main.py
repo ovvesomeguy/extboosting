@@ -8,16 +8,20 @@ import json
 import time
 import os
 
-from configs.keys         import vk_key , admin_ids
+
+from configs.keys         import admin_ids
 from configs.rules        import rules
 
 from src.utils.logger     import Logger
 from src.vk.longpolling   import check
 from src.database.control import Manager
 
+from dotenv import load_dotenv
+load_dotenv()
+
 class VK:
     def __init__(self):
-        self.vk = vk_api.VkApi(token=vk_key)
+        self.vk = vk_api.VkApi(token=os.getenv('VK_KEY'))
 
     def get_info(self , user_id , name=False):
         v = self.vk.method('users.get' , {'user_ids': [user_id] , 'name_case': 'nom'})
@@ -120,5 +124,3 @@ def main():
                 v.send_message(user_id=msg['id'] , message='.' , keyboard=json.dumps(keyboards.give_me_money))
 if __name__ == "__main__":
     main()
-    # v = VK()
-    # print(v.last_message(263838377))

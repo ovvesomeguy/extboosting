@@ -5,11 +5,10 @@ Description=exboost_daemon
 PIDFile =/var/run/bot.pid
 User=root
 
-WorkingDirectory=/home/extboosting/
+WorkingDirectory=/root/extboosting
 ExecStart= /usr/bin/python3 main.py
 ExecStop=/bin/kill -INT $MAINPID
 ExecReload=/bin/kill -TERM $MAINPID
-
 Restart=always
 
 [Install]
